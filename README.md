@@ -1,4 +1,4 @@
-```markdown
+
 # 🛋️ Интернет-магазин мебели «Планета Мебели»
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat-square&logo=php&logoColor=white)
@@ -324,6 +324,3 @@ planeta-mebeli/
 ---
 
 *Последнее обновление: 2026 год*
-```
-
----
