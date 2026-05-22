@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Личный кабинет — Планета Мебели</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0E8;--warm:#FDFAF5;--walnut:#7C5C3E;--walnut-l:#A07850;--charcoal:#2A2420;--mid:#8C7B6E;--line:rgba(124,92,62,.18);--gold:#C9A96E;--green:#4A7C59;--red:#B04040}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--warm);color:var(--charcoal);font-weight:300;font-size:15px;line-height:1.6;min-height:100vh}
+/* HEADER */
+.header{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(253,250,245,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);height:72px;display:flex;align-items:center}
+.hinner{width:100%;max-width:1440px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:.04em;color:var(--charcoal);text-decoration:none}
+.logo span{color:var(--walnut);font-style:italic}
+.nav{display:flex;gap:36px;list-style:none}
+.nav a{text-decoration:none;color:var(--charcoal);font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:400;transition:color .2s}
+.nav a:hover{color:var(--walnut)}
+.hactions{display:flex;align-items:center;gap:20px;justify-content:flex-end}
+.cart-btn{background:none;border:none;cursor:pointer;color:var(--charcoal);display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.cart-btn:hover{color:var(--walnut)}
+.cart-count{background:var(--walnut);color:#fff;width:18px;height:18px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;min-width:18px}
+.logout-btn{background:none;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);transition:color .2s}
+.logout-btn:hover{color:var(--red)}
+/* PAGE */
+.page-wrap{max-width:1440px;margin:0 auto;padding:100px 48px 80px;display:grid;grid-template-columns:260px 1fr;gap:48px;align-items:start}
+/* SIDEBAR */
+.sidebar{}
+.user-card{background:var(--cream);padding:28px;margin-bottom:24px}
+.user-avatar{width:64px;height:64px;border-radius:50%;background:var(--walnut);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:14px}
+.user-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:3px}
+.user-email{font-size:12px;color:var(--mid);letter-spacing:.04em}
+.sidebar-nav{display:flex;flex-direction:column;gap:0}
+.tab-btn{background:none;border:none;cursor:pointer;text-align:left;padding:14px 16px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);transition:all .2s;border-left:2px solid transparent;display:flex;align-items:center;gap:12px}
+.tab-btn:hover{color:var(--charcoal);border-left-color:var(--line)}
+.tab-btn.active{color:var(--walnut);border-left-color:var(--walnut);background:rgba(124,92,62,.04)}
+.tab-icon{font-size:16px;width:20px;text-align:center}
+/* CONTENT */
+.content-area{}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.panel-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,38px);font-weight:300;margin-bottom:32px;line-height:1.15}
+.panel-title em{font-style:italic;color:var(--walnut)}
+/* ORDERS */
+.order-card{border:1px solid var(--line);margin-bottom:16px;transition:border-color .2s}
+.order-card:hover{border-color:var(--walnut-l)}
+.order-head{padding:18px 22px;display:flex;align-items:center;gap:20px;cursor:pointer;background:var(--warm);flex-wrap:wrap}
+.order-num{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400}
+.order-date{font-size:12px;color:var(--mid);letter-spacing:.06em}
+.order-sum{font-size:16px;color:var(--charcoal);font-weight:400;margin-left:auto}
+.order-status{font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px}
+.status-delivered{background:rgba(74,124,89,.12);color:var(--green)}
+.status-processing{background:rgba(201,169,110,.15);color:#9A7030}
+.status-cancelled{background:rgba(176,64,64,.1);color:var(--red)}
+.order-chevron{color:var(--mid);font-size:12px;transition:transform .25s}
+.order-card.open .order-chevron{transform:rotate(180deg)}
+.order-body{display:none;border-top:1px solid var(--line);padding:18px 22px;background:var(--cream)}
+.order-card.open .order-body{display:block}
+.order-items{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.oi-row{display:flex;align-items:center;gap:14px}
+.oi-img{width:52px;height:52px;background:var(--warm);background-size:cover;background-position:center;flex-shrink:0}
+.oi-info{flex:1}
+.oi-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400}
+.oi-meta{font-size:12px;color:var(--mid)}
+.oi-price{font-size:14px;color:var(--charcoal);white-space:nowrap}
+.order-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--line)}
+.order-total{font-family:'Cormorant Garamond',serif;font-size:20px}
+.btn-reorder{background:none;border:1px solid var(--walnut);color:var(--walnut);padding:8px 20px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-reorder:hover{background:var(--walnut);color:#fff}
+.empty-state{text-align:center;padding:64px 24px}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.empty-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--mid);margin-bottom:12px}
+.empty-sub{font-size:14px;color:var(--mid)}
+/* FAVORITES */
+.favs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
+.fav-card{position:relative;cursor:pointer;transition:transform .3s}
+.fav-card:hover{transform:translateY(-3px)}
+.fav-card:hover .fc-img-inner{transform:scale(1.05)}
+.fc-img{width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--cream);margin-bottom:12px;position:relative}
+.fc-img-inner{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .5s ease}
+.fc-remove{position:absolute;top:8px;right:8px;background:rgba(253,250,245,.88);border:none;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--mid);transition:all .2s;z-index:2}
+.fc-remove:hover{background:var(--red);color:#fff}
+.fc-cat{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:3px}
+.fc-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;margin-bottom:5px;color:var(--charcoal);display:block;text-decoration:none}
+.fc-price{font-size:14px;color:var(--walnut);display:flex;gap:10px;align-items:baseline;margin-bottom:9px}
+.btn-add-from-fav{width:100%;background:none;border:1px solid var(--line);padding:9px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal);cursor:pointer;transition:all .2s}
+.btn-add-from-fav:hover{background:var(--walnut);color:#fff;border-color:var(--walnut)}
+/* PROFILE FORM */
+.profile-form-wrap{max-width:560px}
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.fg label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+.fg input,.fg select,.fg textarea{background:var(--warm);border:1px solid var(--line);padding:12px 15px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:var(--charcoal);outline:none;transition:border-color .2s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--walnut)}
+.fg textarea{height:80px;resize:vertical}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-save{background:var(--walnut);color:#fff;border:none;padding:13px 38px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s}
+.btn-save:hover{background:var(--walnut-l);transform:translateY(-1px)}
+.save-msg{display:none;font-size:13px;color:var(--green);margin-top:12px}
+.save-msg.show{display:block}
+/* FOOTER */
+footer{background:var(--charcoal);color:rgba(255,255,255,.72);font-size:13px;font-weight:300}
+.footer-inner{max-width:1440px;margin:0 auto;padding:48px 48px 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:36px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:10px}
+.footer-logo span{color:var(--gold);font-style:italic}
+.fcol h4{color:#fff;font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;font-weight:500}
+.fcol ul{list-style:none}
+.fcol li{margin-bottom:8px}
+.fcol a{color:rgba(255,255,255,.58);text-decoration:none;transition:color .2s}
+.fcol a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;z-index:999;background:var(--charcoal);color:#fff;padding:13px 22px;font-size:13px;transform:translateY(100px);opacity:0;transition:all .35s ease;display:flex;align-items:center;gap:10px;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,.25)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{color:var(--gold)}
+/* RESPONSIVE */
+@media(max-width:1100px){.hinner{padding:0 24px}.page-wrap{padding-left:24px;padding-right:24px}.footer-grid{grid-template-columns:1fr 1fr;gap:28px}.footer-inner{padding:40px 24px 22px}}
+@media(max-width:900px){.page-wrap{grid-template-columns:1fr}.sidebar{display:flex;gap:0;flex-direction:column}.sidebar-nav{flex-direction:row;overflow-x:auto}.tab-btn{border-left:none;border-bottom:2px solid transparent;white-space:nowrap;padding:12px 14px}.tab-btn.active{border-left:none;border-bottom-color:var(--walnut)}}
+@media(max-width:768px){.nav{display:none}.form-2col{grid-template-columns:1fr}.favs-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column}}
+@media(max-width:480px){.hinner{padding:0 14px}.page-wrap{padding:90px 14px 60px}.favs-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="hinner">
+    <a href="index.html" class="logo">Планета <span>Мебели</span></a>
+    <ul class="nav">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="#">Каталог</a></li>
+      <li><a href="#">Доставка</a></li>
+      <li><a href="#">Контакты</a></li>
+    </ul>
+    <div class="hactions">
+      <button class="logout-btn" onclick="handleLogout()">Выйти</button>
+      <button class="cart-btn" onclick="location.href='#'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="user-card">
+      <div class="user-avatar" id="userAvatarLetter">А</div>
+      <div class="user-name" id="userName">Анна Петрова</div>
+      <div class="user-email" id="userEmail">anna@email.ru</div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="tab-btn active" data-tab="orders" onclick="switchTab('orders')">
+        <span class="tab-icon">📦</span> История заказов
+      </button>
+      <button class="tab-btn" data-tab="favorites" onclick="switchTab('favorites')">
+        <span class="tab-icon">♡</span> Избранное
+        <span id="favsCount" style="margin-left:auto;font-size:11px;color:var(--mid)"></span>
+      </button>
+      <button class="tab-btn" data-tab="profile" onclick="switchTab('profile')">
+        <span class="tab-icon">✎</span> Мой профиль
+      </button>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content-area">
+
+    <!-- ORDERS TAB -->
+    <div class="tab-panel active" id="tab-orders">
+      <h2 class="panel-title">История <em>заказов</em></h2>
+      <div id="ordersList"></div>
+    </div>
+
+    <!-- FAVORITES TAB -->
+    <div class="tab-panel" id="tab-favorites">
+      <h2 class="panel-title">Моё <em>избранное</em></h2>
+      <div class="favs-grid" id="favsGrid"></div>
+    </div>
+
+    <!-- PROFILE TAB -->
+    <div class="tab-panel" id="tab-profile">
+      <h2 class="panel-title">Мой <em>профиль</em></h2>
+      <div class="profile-form-wrap">
+        <form id="profileForm">
+          <div class="form-2col">
+            <div class="fg">
+              <label>Имя</label>
+              <input type="text" id="pfName" placeholder="Анна">
+            </div>
+            <div class="fg">
+              <label>Фамилия</label>
+              <input type="text" id="pfSurname" placeholder="Петрова">
+            </div>
+          </div>
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" id="pfEmail" placeholder="anna@email.ru">
+          </div>
+          <div class="fg">
+            <label>Телефон</label>
+            <input type="tel" id="pfPhone" placeholder="+7 (999) 000-00-00">
+          </div>
+          <div class="fg">
+            <label>Адрес доставки</label>
+            <textarea id="pfAddress" placeholder="Город, улица, дом, квартира"></textarea>
+          </div>
+          <button type="submit" class="btn-save">Сохранить изменения</button>
+          <p class="save-msg" id="saveMsg">✓ Данные успешно сохранены</p>
+        </form>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Планета <span>Мебели</span></div>
+        <p style="color:rgba(255,255,255,.55);line-height:1.8">Мы создаём пространство для жизни.</p>
+      </div>
+      <div class="fcol"><h4>Каталог</h4><ul><li><a href="#">Диваны</a></li><li><a href="#">Кровати</a></li><li><a href="#">Столы</a></li><li><a href="#">Шкафы</a></li></ul></div>
+      <div class="fcol"><h4>Компания</h4><ul><li><a href="#">О нас</a></li><li><a href="#">Доставка</a></li><li><a href="#">Гарантия</a></li><li><a href="#">Контакты</a></li></ul></div>
+      <div class="fcol"><h4>Связаться</h4><ul><li><a href="#">+7 (800) 555-35-35</a></li><li><a href="#">info@planeta-mebeli.ru</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 Планета Мебели</span><span>Политика конфиденциальности</span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+
+<script>
+/* ── MOCK DATA ── */
+const MOCK_USER = {
+  id:1, name:'Анна Петрова', email:'anna@email.ru',
+  phone:'+7 (916) 234-56-78', address:'Москва, ул. Ленина, д. 10, кв. 25'
+};
+
+const MOCK_ORDERS = [
+  {
+    id:'PM-2025-0312', date:'12 марта 2025', status:'delivered', status_text:'Доставлен', total:124400,
+    items:[
+      {name:'Диван Модерн',qty:1,price:89900,color:'Серый',material:'Велюр',image:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&q=80'},
+      {name:'Столик журнальный',qty:1,price:21500,color:null,material:null,image:'https://images.unsplash.com/photo-1530018352490-c6eef07fd7e0?w=200&q=80'},
+      {name:'Декор-ваза',qty:2,price:6500,color:null,material:null,image:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&q=80'},
+    ]
+  },
+  {
+    id:'PM-2025-0118', date:'18 января 2025', status:'delivered', status_text:'Доставлен', total:48200,
+    items:[
+      {name:'Шкаф Классик',qty:1,price:48200,color:'Белый',material:'МДФ',image:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=80'},
+    ]
+  },
+  {
+    id:'PM-2024-1105', date:'5 ноября 2024', status:'processing', status_text:'В обработке', total:34500,
+    items:[
+      {name:'Кресло Лофт',qty:1,price:34500,color:'Бежевый',material:'Рогожка',image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=200&q=80'},
+    ]
+  },
+];
+
+/* ── STORAGE ── */
+const getCart = () => JSON.parse(localStorage.getItem('pm_cart')||'[]');
+const saveCart = c => localStorage.setItem('pm_cart',JSON.stringify(c));
+const getFavs = () => JSON.parse(localStorage.getItem('pm_favs')||'[]');
+const saveFavs = f => localStorage.setItem('pm_favs',JSON.stringify(f));
+
+function updateCartCount(){
+  const n=getCart().reduce((s,i)=>s+i.quantity,0);
+  document.getElementById('cartCount').textContent=n;
+}
+
+/* ── TOAST ── */
+function showToast(msg,isOk=true){
+  const t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg;
+  document.querySelector('.toast-icon').textContent=isOk?'✓':'✕';
+  t.classList.add('show'); clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ── TABS ── */
+function switchTab(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('[data-tab="'+name+'"]').classList.add('active');
+  if(name==='favorites') renderFavs();
+}
+
+/* ── MOCK API ── */
+function mockFetch(url){
+  return new Promise(res=>setTimeout(()=>{
+    if(url.includes('/api/auth/me')) res(MOCK_USER);
+    else if(url.includes('/api/orders/user')) res(MOCK_ORDERS);
+    else if(url.includes('/api/favorites')) res(getFavs());
+    else res({});
+  },300));
+}
+async function apiFetch(url){
+  try{const r=await fetch(url);if(!r.ok)throw 0;return await r.json();}
+  catch{return mockFetch(url);}
+}
+
+/* ── ORDERS ── */
+function renderOrders(orders){
+  const el=document.getElementById('ordersList');
+  if(!orders.length){
+    el.innerHTML=`<div class="empty-state">
+      <div class="empty-icon">📦</div>
+      <p class="empty-text">Заказов пока нет</p>
+      <p class="empty-sub">Перейдите в каталог и выберите мебель для вашего дома</p>
+      <a href="index.html" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--walnut);color:#fff;text-decoration:none;font-size:12px;letter-spacing:.12em;text-transform:uppercase">В каталог</a>
+    </div>`;
+    return;
+  }
+  el.innerHTML=orders.map(o=>{
+    const statusCls='status-'+o.status;
+    const itemsHtml=o.items.map(it=>`
+      <div class="oi-row">
+        <div class="oi-img" style="background-image:url('${it.image}')"></div>
+        <div class="oi-info">
+          <div class="oi-name">${it.name}</div>
+          <div class="oi-meta">${[it.color,it.material,it.qty>1?'× '+it.qty:null].filter(Boolean).join(' · ')}</div>
+        </div>
+        <div class="oi-price">${(it.price*it.qty).toLocaleString('ru-RU')} ₽</div>
+      </div>`
+    ).join('');
+    return `<div class="order-card" id="order-${o.id}">
+      <div class="order-head" onclick="toggleOrder('${o.id}')">
+        <div>
+          <div class="order-num">Заказ ${o.id}</div>
+          <div class="order-date">${o.date}</div>
+        </div>
+        <span class="order-status ${statusCls}">${o.status_text}</span>
+        <div class="order-sum">${o.total.toLocaleString('ru-RU')} ₽</div>
+        <span class="order-chevron">▼</span>
+      </div>
+      <div class="order-body">
+        <div class="order-items">${itemsHtml}</div>
+        <div class="order-footer">
+          <span class="order-total">Итого: ${o.total.toLocaleString('ru-RU')} ₽</span>
+          <button class="btn-reorder" onclick="reorder(${JSON.stringify(o.items).replace(/"/g,'&quot;')})">Повторить заказ</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleOrder(id){
+  document.getElementById('order-'+id).classList.toggle('open');
+}
+
+function reorder(items){
+  const cart=getCart();
+  items.forEach(it=>{
+    const key=it.name+'__'+(it.color||'')+'__'+(it.material||'');
+    const ex=cart.find(i=>i._key===key);
+    if(ex) ex.quantity+=1;
+    else cart.push({productId:Math.random(),_key:key,name:it.name,price:it.price,quantity:1,options:{color:it.color,material:it.material}});
+  });
+  saveCart(cart); updateCartCount();
+  showToast('Товары добавлены в корзину');
+}
+
+/* ── FAVORITES ── */
+function renderFavs(){
+  const favs=getFavs();
+  document.getElementById('favsCount').textContent=favs.length||'';
+  const grid=document.getElementById('favsGrid');
+  if(!favs.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">♡</div>
+      <p class="empty-text">Избранное пусто</p>
+      <p class="empty-sub">Добавляйте понравившиеся товары нажимая ♡ на карточке</p>
+      <a href="index.html" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--walnut);color:#fff;text-decoration:none;font-size:12px;letter-spacing:.12em;text-transform:uppercase">В каталог</a>
+    </div>`;
+    return;
+  }
+  grid.innerHTML=favs.map(f=>`
+    <div class="fav-card" onclick="location.href='product.html?id=${f.id}'">
+      <div class="fc-img">
+        <div class="fc-img-inner" style="background-image:url('${f.image||'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80'}')"></div>
+        <button class="fc-remove" onclick="event.stopPropagation();removeFav(${f.id})" title="Удалить из избранного">✕</button>
+      </div>
+      <p class="fc-cat">${f.category||'Мебель'}</p>
+      <a class="fc-name">${f.name}</a>
+      <div class="fc-price"><span>${f.price.toLocaleString('ru-RU')} ₽</span></div>
+      <button class="btn-add-from-fav" onclick="event.stopPropagation();addFavToCart(${f.id},'${f.name.replace(/'/g,"\\'")}',${f.price})">В корзину</button>
+    </div>`
+  ).join('');
+}
+
+function removeFav(id){
+  const favs=getFavs().filter(f=>f.id!==id);
+  saveFavs(favs);
+  renderFavs();
+  console.log('[mock] POST /api/favorites/toggle',{product_id:id});
+  showToast('Удалено из избранного');
+}
+
+function addFavToCart(id,name,price){
+  const cart=getCart();
+  const key='fav_'+id;
+  const ex=cart.find(i=>i._key===key);
+  if(ex) ex.quantity+=1; else cart.push({productId:id,_key:key,name,price,quantity:1,options:{}});
+  saveCart(cart); updateCartCount();
+  showToast('«'+name+'» добавлен в корзину');
+}
+
+/* ── PROFILE FORM ── */
+async function loadProfile(){
+  const user=await apiFetch('/api/auth/me');
+  const u=user||MOCK_USER;
+  const parts=u.name.split(' ');
+  document.getElementById('pfName').value=parts[0]||'';
+  document.getElementById('pfSurname').value=parts.slice(1).join(' ')||'';
+  document.getElementById('pfEmail').value=u.email||'';
+  document.getElementById('pfPhone').value=u.phone||'';
+  document.getElementById('pfAddress').value=u.address||'';
+  // sidebar
+  document.getElementById('userName').textContent=u.name;
+  document.getElementById('userEmail').textContent=u.email;
+  document.getElementById('userAvatarLetter').textContent=u.name.charAt(0).toUpperCase();
+  // save to localStorage so header on other pages can read
+  localStorage.setItem('pm_user',JSON.stringify({name:u.name,email:u.email}));
+}
+
+document.getElementById('profileForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const name=(document.getElementById('pfName').value+' '+document.getElementById('pfSurname').value).trim();
+  const email=document.getElementById('pfEmail').value.trim();
+  const phone=document.getElementById('pfPhone').value.trim();
+  const address=document.getElementById('pfAddress').value.trim();
+  const payload={name,email,phone,address};
+  try{await fetch('/api/user/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch{}
+  console.log('[mock] POST /api/user/update',payload);
+  // update sidebar & localStorage
+  document.getElementById('userName').textContent=name;
+  document.getElementById('userEmail').textContent=email;
+  document.getElementById('userAvatarLetter').textContent=name.charAt(0).toUpperCase();
+  localStorage.setItem('pm_user',JSON.stringify({name,email}));
+  const msg=document.getElementById('saveMsg');
+  msg.classList.add('show');
+  setTimeout(()=>msg.classList.remove('show'),3500);
+  showToast('Данные профиля обновлены');
+});
+
+/* ── LOGOUT ── */
+function handleLogout(){
+  localStorage.removeItem('pm_user');
+  // keep cart, but could clear too
+  showToast('Вы вышли из аккаунта');
+  setTimeout(()=>location.href='index.html',1200);
+}
+
+/* ── INIT ── */
+(async function init(){
+  updateCartCount();
+  await loadProfile();
+  const orders=await apiFetch('/api/orders/user');
+  renderOrders(Array.isArray(orders)?orders:MOCK_ORDERS);
+  renderFavs();
+  // update fav counter in sidebar
+  document.getElementById('favsCount').textContent=getFavs().length||'';
+  // check if specific tab requested
+  const tab=new URLSearchParams(location.search).get('tab');
+  if(tab) switchTab(tab);
+})();
+</script>
+</body>
+</html>
