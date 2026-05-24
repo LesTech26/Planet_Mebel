@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Заказ оформлен — Планета Мебели</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .success-page {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 140px 24px 80px;
+    }
+
+    .success-card {
+      background: var(--cream);
+      padding: 48px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .success-icon {
+      font-size: 72px;
+      color: var(--green);
+      margin-bottom: 24px;
+    }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .success-message {
+      color: var(--mid);
+      margin-bottom: 24px;
+    }
+
+    .order-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: var(--walnut);
+      margin-bottom: 32px;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .success-actions .btn {
+      min-width: 180px;
+    }
+
+    .header,
+    footer {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .success-card {
+        padding: 32px 24px;
+      }
+
+      .success-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="success-page">
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h1 class="success-title">Спасибо за заказ!</h1>
+      <p class="success-message">Ваш заказ успешно оформлен. Номер вашего заказа:</p>
+      <div class="order-number" id="orderNumber">#PM-00000</div>
+      <p class="success-message">Подтверждение отправлено на вашу электронную почту.<br>Наш менеджер свяжется с вами в
+        ближайшее время.</p>
+      <div class="success-actions">
+        <a href="catalog.html" class="btn btn-primary">Продолжить покупки</a>
+        <a href="profile.html?tab=orders" class="btn btn-outline">История заказов</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Get order ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('order_id');
+
+    if (orderId) {
+      document.getElementById('orderNumber').textContent = `#${orderId}`;
+    } else {
+      // Fallback to random number
+      document.getElementById('orderNumber').textContent = `#${Math.floor(Math.random() * 100000)}`;
+    }
+  </script>
+
+</body>
+
+</html>

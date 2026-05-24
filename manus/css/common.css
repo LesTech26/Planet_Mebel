@@ -1,0 +1,320 @@
+/* Common styles — reset, typography, grid, buttons */
+
+@import url('variables.css');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--warm);
+  color: var(--charcoal);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* Grid system */
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1200px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .container {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 0 14px;
+  }
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: none;
+  background: none;
+}
+
+.btn-primary {
+  background: var(--walnut);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--walnut-l);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid var(--walnut);
+  color: var(--walnut);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--walnut);
+  color: #fff;
+}
+
+/* Product Card (совместим с карточкой Максуда) */
+.product-card {
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--transition-normal);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-card:hover .card-img-inner {
+  transform: scale(1.05);
+}
+
+.card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--cream);
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.card-img-inner {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+}
+
+.card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--walnut);
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+}
+
+.card-fav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: rgba(253, 250, 245, 0.88);
+  border: none;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  font-size: 17px;
+  color: var(--mid);
+  border-radius: 50%;
+}
+
+.product-card:hover .card-fav,
+.card-fav.fav-active {
+  opacity: 1;
+}
+
+.card-fav.fav-active {
+  color: var(--walnut);
+}
+
+.card-cat {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 3px;
+}
+
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 7px;
+  color: var(--charcoal);
+  text-decoration: none;
+  display: block;
+}
+
+.card-price {
+  font-size: 15px;
+  color: var(--walnut);
+  font-weight: 400;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.card-price-old {
+  font-size: 12px;
+  color: var(--mid);
+  text-decoration: line-through;
+}
+
+.card-add {
+  margin-top: 10px;
+  width: 100%;
+  background: none;
+  border: 1px solid var(--line);
+  padding: 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.product-card:hover .card-add {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-add:hover {
+  background: var(--walnut);
+  color: #fff;
+  border-color: var(--walnut);
+}
+
+/* Spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--line);
+  border-top-color: var(--walnut);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 40px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Toast (совместим с toast Максуда) */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  background: var(--charcoal);
+  color: #fff;
+  padding: 13px 22px;
+  font-size: 13px;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.35s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 340px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast-icon {
+  color: var(--gold);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.pagination a,
+.pagination span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--charcoal);
+  font-size: 14px;
+  transition: all var(--transition-fast);
+}
+
+.pagination a:hover {
+  border-color: var(--walnut);
+  color: var(--walnut);
+}
+
+.pagination .active {
+  background: var(--walnut);
+  border-color: var(--walnut);
+  color: #fff;
+}
+
+.pagination .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
