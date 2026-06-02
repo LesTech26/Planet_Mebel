@@ -1,326 +1,307 @@
+Вот исправленный README.md файл с указанием правильной компании-разработчика:
 
-# 🛋️ Интернет-магазин мебели «Планета Мебели»
+```markdown
+# Планета Мебели — Интернет-магазин мебели
 
-![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat-square&logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+## Описание проекта
 
-> **Полноценный интернет-магазин мебели для дома** (диваны, кровати, столы, стулья, шкафы, системы хранения).  
-> Разработан на чистом PHP + MySQL + HTML/CSS/JS без фреймворков.  
-> **Срок разработки:** 3 недели | **Команда:** 4 разработчика
+Веб-сайт интернет-магазина мебели "Планета Мебели" с полным функционалом: каталог товаров, корзина, оформление заказов, личный кабинет, админ-панель, формы обратной связи и заявок от дизайнеров.
 
----
+## Технологии
 
-## 📋 Оглавление
+- **Backend:** PHP 7.4+ (нативный PHP без фреймворков)
+- **Frontend:** HTML5, CSS3, JavaScript (ES6)
+- **База данных:** MySQL
+- **Библиотеки:** 
+  - Swiper.js (карусели и слайдеры)
+  - Font Awesome 6 (иконки)
+  - Google Fonts (шрифты Cormorant Garamond и Jost)
 
-- [Демонстрация](#-демонстрация)
-- [Особенности проекта](#-особенности-проекта)
-- [Технологический стек](#-технологический-стек)
-- [Функционал](#-функционал)
-- [Команда проекта](#-команда-проекта)
-- [Структура базы данных](#-структура-базы-данных)
-- [Установка и запуск](#-установка-и-запуск)
-- [API эндпоинты](#-api-эндпоинты)
-- [Безопасность](#-безопасность)
-- [Скриншоты](#-скриншоты)
-- [Лицензия](#-лицензия)
-
----
-
-## 🎯 Демонстрация
-
-| Раздел | Описание |
-|--------|----------|
-| **Публичная часть** | Главная, каталог, карточка товара, корзина, оформление заказа, личный кабинет |
-| **Админ-панель** | `/admin` — управление товарами, заказами, пользователями, контентом |
-
-> 🔧 **Локальный запуск:** после установки откройте `http://localhost/planeta-mebeli`
-
----
-
-## ✨ Особенности проекта
-
-- ✅ **Чистый PHP** (без фреймворков, но с ООП и MVC-подходом)
-- ✅ **Адаптивная вёрстка** (от 320px до 1920px)
-- ✅ **AJAX-фильтрация** каталога без перезагрузки страницы
-- ✅ **Автоматический ресайз** изображений при загрузке (GD)
-- ✅ **Email-уведомления** (PHPMailer)
-- ✅ **CSRF-защита** всех форм
-- ✅ **Подготовленные SQL-запросы** (защита от инъекций)
-- ✅ **Промокоды** (процентные и фиксированные)
-- ✅ **Тестовый платёжный шлюз** (имитация оплаты)
-
----
-
-## 🛠️ Технологический стек
-
-| Компонент | Технология |
-|-----------|-------------|
-| **Backend** | PHP 8.x (нативный, ООП, PDO, сессии) |
-| **Frontend** | HTML5, CSS3 (Flexbox/Grid, адаптив), JavaScript ES6+ |
-| **База данных** | MySQL 8.0 / MariaDB |
-| **Сервер** | Apache (OpenServer / XAMPP / WAMP) |
-| **Библиотеки** | Swiper (карусели), Flatpickr (календарь), Chart.js (графики), PHPMailer (почта) |
-
----
-
-## 📦 Функционал
-
-### 👥 Публичная часть
-
-#### 🏠 Главная страница
-- Слайдер баннеров (управление из админки)
-- Карусели «Хиты продаж» и «Новинки»
-- Блок категорий с иконками
-- Форма подписки на email (скидка 5%)
-
-#### 📂 Каталог товаров
-- Фильтрация (цена, категория, бренд, размеры, материал) — AJAX
-- Сортировка (по цене, новизне, популярности)
-- Пагинация (12 товаров на страницу)
-- Карточка товара с рейтингом и кнопкой «Быстрый просмотр»
-
-#### 🔍 Страница товара
-- Галерея изображений с увеличением (zoom)
-- Выбор опций (цвет обивки, материал) — динамическая смена цены и фото
-- Блок характеристик (таблица)
-- Блок отзывов (добавление + модерация)
-- Блок поперечных продаж «С этим товаром покупают»
-
-#### 🛒 Корзина
-- Добавление/удаление товаров
-- Изменение количества
-- Промокоды (проверка на сервере)
-- Автоматический расчёт доставки (бесплатно от 10 000 ₽)
-
-#### 📝 Оформление заказа
-- Форма с валидацией (ФИО, телефон, email)
-- Выбор доставки (самовывоз / курьер)
-- Выбор оплаты (карта онлайн / наличные / безналичный счёт)
-- Календарь даты доставки (недоступные даты из админки)
-- Автоматическая регистрация (опционально)
-
-#### 👤 Личный кабинет
-- История заказов (с деталями и кнопкой «Купить снова»)
-- Избранное
-- Редактирование профиля
-- Смена пароля
-
----
-
-### 🔧 Административная панель (`/admin`)
-
-| Модуль | Возможности |
-|--------|-------------|
-| **Товары** | CRUD, загрузка нескольких изображений (авто-ресайз), метки (хит/новинка), динамические характеристики |
-| **Заказы** | Список с фильтром по статусу, просмотр деталей, изменение статуса (email-уведомление), трек-номер |
-| **Пользователи** | Список, блокировка, смена роли (админ/менеджер/пользователь) |
-| **Слайдеры** | Добавление/редактирование/удаление слайдов на главной |
-| **Промокоды** | CRUD промокодов (тип, значение, минимальная сумма, срок действия) |
-| **Отзывы** | Модерация (опубликовать/отклонить), ответ от магазина |
-| **Дашборд** | График выручки за 30 дней, топ-10 товаров, уведомления об остатках (<5 шт) |
-
----
-
-## 👨‍💻 Команда проекта
-
-| Разработчик | Роль | Обязанности |
-|-------------|------|-------------|
-| **Тимур** | Lead Backend | PHP, БД, API, админ-панель (бэкенд), безопасность, интеграции |
-| **Манусевич Даниил** | Frontend | Каталог, корзина, оформление заказа |
-| **Рахимов Максуд** | Frontend | Главная страница, карточка товара, отзывы, личный кабинет |
-| **Ефимов Никита** | Frontend (Admin) | Фронтенд админ-панели (HTML/CSS/JS + API) |
-
----
-
-## 🗄️ Структура базы данных
-
-**Основные таблицы:**
+## Структура проекта
 
 ```
-users, categories, brands, products, product_images, product_features,
-orders, order_items, favorites, promocodes, reviews, sliders, sessions
+planet-mebeli.loc/
+├── index.php                 # Главная страница
+├── catalog.php               # Каталог товаров
+├── product.php              # Страница товара
+├── cart.php                 # Корзина
+├── checkout.php             # Оформление заказа
+├── profile.php              # Личный кабинет
+├── contacts.php             # Контакты
+├── about.php                # О компании
+├── delivery.php             # Доставка и оплата
+├── designers.php            # Страница для дизайнеров (форма заявки)
+│
+├── admin/                   # Админ-панель
+│   ├── index.php           # Главная страница админки
+│   ├── products.php        # Управление товарами
+│   ├── orders.php          # Управление заказами
+│   ├── messages.php        # Сообщения с сайта
+│   └── admin_designers.php # Заявки от дизайнеров
+│
+├── includes/                # Подключаемые файлы
+│   ├── db.php              # Подключение к БД
+│   ├── functions.php       # Вспомогательные функции
+│   └── auth.php            # Авторизация
+│
+├── uploads/                 # Загруженные файлы
+│   ├── products/           # Изображения товаров
+│   └── slides/             # Изображения слайдера
+│
+└── assets/                  # Статические файлы
+    ├── css/                # Стили
+    ├── js/                 # Скрипты
+    └── images/             # Изображения
 ```
 
-<details>
-<summary>📊 Схема (ключевые поля)</summary>
+## Установка
 
-```sql
--- Пользователи
-users (id, email, password_hash, role, name, phone, address, blocked, created_at)
+### 1. Требования
 
--- Товары
-products (id, name, article, category_id, brand_id, price, old_price, stock, is_hit, is_new)
-product_images (id, product_id, filename, sort_order)
-product_features (id, product_id, feature_name, feature_value)
+- PHP 7.4 или выше
+- MySQL 5.7 или выше
+- Apache/Nginx
+- OpenServer / XAMPP / MAMP / Docker
 
--- Заказы
-orders (id, user_id, status, total, delivery_method, payment_method, delivery_address, delivery_date)
-order_items (id, order_id, product_id, quantity, price_at_time)
-
--- Промокоды
-promocodes (id, code, type, value, min_amount, expires_at, used_count)
-
--- Отзывы
-reviews (id, product_id, user_id, rating, text, answer, is_moderated)
-```
-</details>
-
----
-
-## 🚀 Установка и запуск
-
-### Требования
-
-- PHP ≥ 7.4 (модули: `pdo_mysql`, `gd`, `openssl`, `mbstring`)
-- MySQL ≥ 5.7
-- Apache с `mod_rewrite`
-
-### Инструкция по установке
+### 2. Клонирование репозитория
 
 ```bash
-# 1. Клонировать репозиторий
-git clone https://github.com/les-tech/planeta-mebeli.git
-cd planeta-mebeli
-
-# 2. Настроить виртуальный хост на папку /public
-#    (пример для OpenServer: папка в domains, document root → /public)
-
-# 3. Создать базу данных
-mysql -u root -p -e "CREATE DATABASE planeta_mebeli CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
-
-# 4. Импортировать структуру и демо-данные
-mysql -u root -p planeta_mebeli < database/dump.sql
-
-# 5. Настроить окружение
-cp config/.env.example config/.env
-# Отредактировать .env: указать данные БД, настройки почты
-
-# 6. Настроить права на папки (Linux/Mac)
-chmod -R 755 uploads/ cache/ logs/
-
-# 7. Создать первого администратора
-php bin/create-admin.php --email=admin@planeta.ru --password=admin123
-
-# 8. Открыть сайт в браузере
-#    http://planeta-mebeli.local
-#    Админ-панель: http://planeta-mebeli.local/admin
+git clone https://github.com/your-username/planet-mebeli.git
+cd planet-mebeli
 ```
 
-> 📘 Подробная инструкция — в файле [`INSTALL.md`](INSTALL.md)
+### 3. Настройка базы данных
 
----
+1. Создайте базу данных MySQL (например, `planet_mebeli`)
+2. Импортируйте SQL-файл из папки `database/`
 
-## 🔌 API эндпоинты
+### 4. Настройка подключения
 
-Все эндпоинты возвращают JSON в формате:
-```json
-{
-  "success": true,
-  "data": {},
-  "errors": null
-}
+Отредактируйте файл `includes/db.php`:
+
+```php
+$host = 'localhost';
+$dbname = 'planet_mebeli';
+$user = 'root';
+$pass = '';
 ```
 
-| Метод | URL | Описание |
-|-------|-----|----------|
-| `GET` | `/api/products` | Список товаров (фильтры, сортировка, пагинация) |
-| `GET` | `/api/product/{id}` | Детальная карточка товара |
-| `GET` | `/api/categories` | Дерево категорий |
-| `POST` | `/api/cart/add` | Добавить товар в корзину |
-| `GET` | `/api/cart` | Получить корзину |
-| `POST` | `/api/order/create` | Создать заказ |
-| `POST` | `/api/promo/apply` | Применить промокод |
-| `POST` | `/api/auth/login` | Вход в личный кабинет |
-| `POST` | `/api/review/add` | Добавить отзыв |
+### 5. Настройка прав доступа
 
-> 📡 Полная документация API — в [`API.md`](API.md)
-
----
-
-## 🔒 Безопасность
-
-- ✅ Пароли хэшируются через `password_hash()`
-- ✅ CSRF-токены для всех форм (GET и POST)
-- ✅ Подготовленные выражения PDO (защита от SQL-инъекций)
-- ✅ XSS-защита (`htmlspecialchars` при любом выводе)
-- ✅ Лимит попыток входа (5 неудачных → блокировка 15 мин)
-- ✅ Валидация всех входных данных на сервере
-- ✅ Проверка MIME-типов загружаемых изображений
-
----
-
-## 📸 Скриншоты
-
-| Главная страница | Каталог с фильтрами |
-|----------------|-------------------|
-| *[скриншот]* | *[скриншот]* |
-
-| Корзина | Админ-панель |
-|---------|-------------|
-| *[скриншот]* | *[скриншот]* |
-
-> 🖼️ Скриншоты будут добавлены после завершения разработки
-
----
-
-## 📁 Структура проекта
-
-```
-planeta-mebeli/
-├── public/                 # Документ-рут сервера
-│   ├── index.php          # Роутер (точка входа)
-│   ├── .htaccess          # ЧПУ-правила
-│   └── assets/            # CSS, JS, изображения
-├── app/
-│   ├── controllers/       # Контроллеры
-│   ├── models/            # Модели (работа с БД)
-│   ├── core/              # Ядро (Router, Database, Auth, Validator)
-│   ├── services/          # Сервисы (Cart, Order, Payment, Mail)
-│   └── helpers/           # Вспомогательные функции
-├── config/
-│   ├── .env               # Конфигурация (не в git)
-│   └── .env.example       # Шаблон конфигурации
-├── views/
-│   ├── front/             # Шаблоны публичной части
-│   └── admin/             # Шаблоны админ-панели
-├── uploads/               # Загруженные изображения (фото товаров)
-├── logs/                  # Логи ошибок
-├── cache/                 # Файловый кэш
-├── bin/                   # Консольные скрипты
-├── database/              # SQL-дампы
-├── docs/                  # Документация
-├── README.md
-└── INSTALL.md
+```bash
+chmod -R 755 uploads/
+chmod -R 755 admin/
 ```
 
+## Структура базы данных
+
+### Таблица `products` (товары)
+```sql
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    slug VARCHAR(200) NOT NULL UNIQUE,
+    category VARCHAR(100),
+    category_id INT,
+    price DECIMAL(10,2) NOT NULL,
+    old_price DECIMAL(10,2),
+    image VARCHAR(500),
+    material VARCHAR(100),
+    description TEXT,
+    specs TEXT,
+    stock ENUM('in', 'low', 'out') DEFAULT 'in',
+    stock_text VARCHAR(100) DEFAULT 'В наличии',
+    is_new TINYINT(1) DEFAULT 0,
+    is_hit TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+### Таблица `orders` (заказы)
+```sql
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(50) NOT NULL UNIQUE,
+    fullname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    address TEXT,
+    delivery_method ENUM('courier', 'pickup') DEFAULT 'courier',
+    payment_method ENUM('card', 'cash', 'bank') DEFAULT 'card',
+    comment TEXT,
+    total DECIMAL(10,2) NOT NULL,
+    status ENUM('new', 'processing', 'delivered', 'cancelled') DEFAULT 'new',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Таблица `order_items` (товары в заказе)
+```sql
+CREATE TABLE order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    product_name VARCHAR(200) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+);
+```
+
+### Таблица `messages` (сообщения с сайта)
+```sql
+CREATE TABLE messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    subject VARCHAR(200),
+    message TEXT NOT NULL,
+    is_read TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Таблица `designer_applications` (заявки дизайнеров)
+```sql
+CREATE TABLE designer_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    company VARCHAR(200),
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(50),
+    request_type ENUM('interior', 'architect', 'studio', 'other'),
+    message TEXT,
+    status ENUM('new', 'in_progress', 'completed', 'rejected') DEFAULT 'new',
+    is_read TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+## Функционал
+
+### Пользовательская часть
+
+- **Главная страница** — слайдер, хиты продаж, новинки, категории
+- **Каталог товаров** — отображение всех товаров с фильтрацией
+- **Карточка товара** — детальная информация, галерея, характеристики, отзывы
+- **Корзина** — добавление/удаление товаров, изменение количества
+- **Оформление заказа** — форма с контактными данными, способами доставки и оплаты
+- **Личный кабинет** — история заказов, избранное, редактирование профиля
+- **Форма обратной связи** — отправка сообщений администратору
+- **Форма для дизайнеров** — заявка на сотрудничество
+
+### Административная панель
+
+Доступ по адресу: `/admin/`
+
+**Возможности:**
+- Просмотр статистики (товары, заказы, сообщения)
+- Управление товарами (CRUD: создание, редактирование, удаление)
+- Загрузка изображений с автоматической конвертацией в WebP
+- Управление заказами (изменение статуса, просмотр деталей)
+- Просмотр и удаление сообщений от пользователей
+- Просмотр и обработка заявок от дизайнеров
+- Отметка прочитанных/непрочитанных сообщений и заявок
+
+## Администратор
+
+**Логин по умолчанию:**
+- Email: `admin@planeta-mebeli.ru`
+- Пароль: `admin123`
+
+(Пароль можно изменить в базе данных, используя функцию `password_hash()`)
+
+## Особенности
+
+### Автоматическая конвертация изображений
+
+При загрузке изображений через админ-панель они автоматически конвертируются в формат WebP для оптимизации загрузки сайта.
+
+### Адаптивный дизайн
+
+Сайт полностью адаптивен и корректно отображается на всех устройствах:
+- Десктоп (1440px+)
+- Ноутбуки (1024px-1440px)
+- Планшеты (768px-1024px)
+- Мобильные телефоны (320px-768px)
+
+### Бургер-меню
+
+На мобильных устройствах стандартное меню заменяется на бургер-меню с выезжающей панелью.
+
+### Корзина
+
+Корзина реализована с использованием `localStorage`, что позволяет сохранять товары даже после перезагрузки страницы без авторизации.
+
+## API и вспомогательные функции
+
+### Основные функции в `includes/functions.php`:
+
+- `db()` — получение соединения с БД
+- `getProducts($filters)` — получение списка товаров
+- `getProduct($id)` — получение товара по ID
+- `formatPrice($price)` — форматирование цены
+- `generateSlug($string)` — генерация URL-slug
+- `requireAdmin()` — проверка прав администратора
+- `isUserLoggedIn()` — проверка авторизации
+
+## Настройка окружения
+
+### Для OpenServer
+
+1. Поместите проект в папку `domains/planet-mebeli.loc`
+2. В настройках домена укажите корневую директорию
+3. Создайте базу данных через phpMyAdmin
+
+### Для XAMPP
+
+1. Поместите проект в `htdocs/planet-mebeli`
+2. Запустите Apache и MySQL
+3. Откройте `http://localhost/planet-mebeli`
+
+## Безопасность
+
+- Защита от SQL-инъекций через PDO и подготовленные запросы
+- Экранирование вывода (htmlspecialchars)
+- Проверка прав доступа в админ-панели
+- Защита паролей (хэширование)
+- Валидация форм на клиенте и сервере
+
+## Поддержка браузеров
+
+- Chrome (последняя версия)
+- Firefox (последняя версия)
+- Safari (последняя версия)
+- Edge (последняя версия)
+- Opera (последняя версия)
+
+## Разработчик
+
+Проект разработан компанией **Лес Тех** — специализация на разработке WEB-проектов.
+
+## Лицензия
+
+© 2026 Планета Мебели. Все права защищены.
+
+
 ---
 
-## 📄 Лицензия
+## Дополнительная информация
 
-Проект разработан компанией **«Лес Тех»** для заказчика **«Планета Мебели»**.
+### Версия PHP
+Рекомендуется PHP 7.4 или выше
 
-Все права защищены. Код не подлежит публичному распространению без письменного согласия обеих сторон.
+### Настройки PHP
+```ini
+upload_max_filesize = 10M
+post_max_size = 10M
+max_execution_time = 300
+memory_limit = 256M
+```
 
----
-
-## 📞 Контакты
-
-| | |
-|---|---|
-| **Заказчик** | «Планета Мебели» |
-| **Исполнитель** | «Лес Тех» |
-| **Дата сдачи** | _______________ |
-| **Репозиторий** | [github.com/les-tech/planeta-mebeli](https://github.com/les-tech/planeta-mebeli) |
-
----
-
-## ⭐ Благодарности
-
-Спасибо команде за слаженную работу и соблюдение дедлайна в 3 недели!
-
----
-
-*Последнее обновление: 2026 год*
+### Техническая поддержка
+По вопросам технической поддержки обращайтесь в компанию-разработчика **Лес Тех**:
+- Email: lestech1@yandex.ru
+```
