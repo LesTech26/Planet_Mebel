@@ -1,0 +1,170 @@
+.checkout-page {
+    padding-top: 100px;
+    min-height: 60vh;
+}
+
+.checkout-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+}
+
+.form-section {
+    background: var(--cream);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.form-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    background: var(--warm);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--walnut);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.delivery-options,
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.delivery-options label,
+.payment-options label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    background: var(--warm);
+}
+
+.delivery-options input,
+.payment-options input {
+    width: auto;
+    margin: 0;
+}
+
+.order-summary {
+    background: var(--cream);
+    padding: 28px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.order-items-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.order-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.order-item-img {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.order-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.order-item-price {
+    font-size: 13px;
+    color: var(--walnut);
+}
+
+.submit-order {
+    width: 100%;
+    margin-top: 24px;
+    background: var(--walnut);
+    color: #fff;
+    padding: 16px;
+    border: none;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.submit-order:hover {
+    background: var(--walnut-l);
+}
+
+.error-field {
+    border-color: var(--red) !important;
+}
+
+@media (max-width: 900px) {
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+    .order-summary {
+        position: static;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-section {
+        padding: 20px;
+    }
+}
