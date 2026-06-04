@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вход / Регистрация — Планета Мебели</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0E8;--warm:#FDFAF5;--walnut:#7C5C3E;--walnut-l:#A07850;--charcoal:#2A2420;--mid:#8C7B6E;--line:rgba(124,92,62,.18);--gold:#C9A96E;--green:#4A7C59;--red:#B04040}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Jost',sans-serif;background:var(--warm);color:var(--charcoal);font-weight:300;font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+
+/* HEADER (как на всех страницах) */
+.header{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(253,250,245,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);height:72px;display:flex;align-items:center}
+.hinner{width:100%;max-width:1440px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:.04em;color:var(--charcoal);text-decoration:none}
+.logo span{color:var(--walnut);font-style:italic}
+.nav{display:flex;gap:36px;list-style:none}
+.nav a{text-decoration:none;color:var(--charcoal);font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:400;transition:color .2s}
+.nav a:hover{color:var(--walnut)}
+.hactions{display:flex;align-items:center;gap:20px;justify-content:flex-end}
+.cart-btn{background:none;border:none;cursor:pointer;color:var(--charcoal);display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.profile-link{color:var(--charcoal);text-decoration:none;font-size:13px;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.profile-link:hover{color:var(--walnut)}
+
+/* MAIN CONTENT — АВТОРИЗАЦИЯ */
+.auth-page{margin-top:100px;padding:0 24px 80px;flex:1}
+.auth-container{max-width:520px;margin:0 auto}
+.tabs{display:flex;gap:0;margin-bottom:32px;border-bottom:1px solid var(--line)}
+.tab-btn{flex:1;background:none;border:none;padding:14px 20px;font-family:'Jost',sans-serif;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent}
+.tab-btn.active{color:var(--walnut);border-bottom-color:var(--walnut);font-weight:400}
+.tab-panel{display:none;animation:fadeIn .35s ease}
+.tab-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.auth-card{background:var(--cream);padding:36px 32px;border-radius:0;box-shadow:0 8px 28px rgba(0,0,0,.04)}
+.auth-card h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:28px;color:var(--charcoal)}
+.auth-card h2 em{font-style:italic;color:var(--walnut)}
+
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:22px}
+.fg label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+.fg input{background:var(--warm);border:1px solid var(--line);padding:12px 15px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:var(--charcoal);outline:none;transition:border-color .2s;width:100%}
+.fg input:focus{border-color:var(--walnut)}
+.fg .ferr{font-size:12px;color:var(--red);margin-top:4px;display:none}
+.fg .ferr.show{display:block}
+
+.row-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-primary{width:100%;background:var(--walnut);color:#fff;border:none;padding:14px 28px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;margin-top:6px}
+.btn-primary:hover{background:var(--walnut-l);transform:translateY(-1px)}
+.auth-note{text-align:center;margin-top:24px;font-size:13px;color:var(--mid)}
+.auth-note a{color:var(--walnut);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.auth-note a:hover{border-bottom-color:var(--walnut)}
+.toast{position:fixed;bottom:28px;right:28px;z-index:999;background:var(--charcoal);color:#fff;padding:13px 22px;font-size:13px;transform:translateY(100px);opacity:0;transition:all .35s ease;display:flex;align-items:center;gap:10px;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,.25)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{color:var(--gold)}
+
+/* FOOTER (как на всех страницах) */
+footer{background:var(--charcoal);color:rgba(255,255,255,.72);font-size:13px;margin-top:auto}
+.footer-inner{max-width:1440px;margin:0 auto;padding:48px 48px 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:36px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:10px}
+.footer-logo span{color:var(--gold);font-style:italic}
+.fcol h4{color:#fff;font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;font-weight:500}
+.fcol ul{list-style:none}
+.fcol li{margin-bottom:8px}
+.fcol a{color:rgba(255,255,255,.58);text-decoration:none;transition:color .2s}
+.fcol a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media(max-width:900px){.hinner{padding:0 24px}.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+@media(max-width:600px){.auth-card{padding:28px 20px}.row-2col{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="hinner">
+    <a href="index.html" class="logo">Планета <span>Мебели</span></a>
+    <ul class="nav">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="#">Каталог</a></li>
+      <li><a href="#">Коллекции</a></li>
+      <li><a href="#">О нас</a></li>
+    </ul>
+    <div class="hactions">
+      <a href="login.html" class="profile-link">Войти</a>
+      <button class="cart-btn" onclick="location.href='#'">🛒 <span id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="auth-page">
+  <div class="auth-container">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">Вход</button>
+      <button class="tab-btn" data-tab="register">Регистрация</button>
+    </div>
+
+    <!-- ВХОД -->
+    <div class="tab-panel active" id="loginPanel">
+      <div class="auth-card">
+        <h2>Добро пожаловать <em>обратно</em></h2>
+        <form id="loginForm">
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" id="loginEmail" placeholder="ivan@mail.ru" autocomplete="email">
+            <span class="ferr" id="loginEmailErr">Введите email</span>
+          </div>
+          <div class="fg">
+            <label>Пароль</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+            <span class="ferr" id="loginPassErr">Введите пароль</span>
+          </div>
+          <button type="submit" class="btn-primary">Войти</button>
+          <p class="auth-note">Нет аккаунта? <a href="#" onclick="switchTab('register')">Зарегистрируйтесь</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- РЕГИСТРАЦИЯ -->
+    <div class="tab-panel" id="registerPanel">
+      <div class="auth-card">
+        <h2>Создать <em>аккаунт</em></h2>
+        <form id="registerForm">
+          <div class="row-2col">
+            <div class="fg">
+              <label>Имя</label>
+              <input type="text" id="regName" placeholder="Иван">
+              <span class="ferr" id="regNameErr">Введите имя</span>
+            </div>
+            <div class="fg">
+              <label>Фамилия</label>
+              <input type="text" id="regSurname" placeholder="Петров">
+              <span class="ferr" id="regSurnameErr">Введите фамилию</span>
+            </div>
+          </div>
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" id="regEmail" placeholder="ivan@mail.ru" autocomplete="email">
+            <span class="ferr" id="regEmailErr">Введите корректный email</span>
+          </div>
+          <div class="fg">
+            <label>Телефон</label>
+            <input type="tel" id="regPhone" placeholder="+7 (999) 123-45-67">
+            <span class="ferr" id="regPhoneErr">Введите телефон</span>
+          </div>
+          <div class="fg">
+            <label>Пароль</label>
+            <input type="password" id="regPassword" placeholder="минимум 6 символов" autocomplete="new-password">
+            <span class="ferr" id="regPassErr">Пароль не менее 6 символов</span>
+          </div>
+          <div class="fg">
+            <label>Подтверждение пароля</label>
+            <input type="password" id="regPassword2" placeholder="повторите пароль">
+            <span class="ferr" id="regPass2Err">Пароли не совпадают</span>
+          </div>
+          <button type="submit" class="btn-primary">Зарегистрироваться</button>
+          <p class="auth-note">Уже есть аккаунт? <a href="#" onclick="switchTab('login')">Войдите</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><div class="footer-logo">Планета <span>Мебели</span></div><p style="color:rgba(255,255,255,.55)">Мебель для вашего дома</p></div>
+      <div class="fcol"><h4>Каталог</h4><ul><li><a href="#">Диваны</a></li><li><a href="#">Кровати</a></li><li><a href="#">Столы</a></li><li><a href="#">Шкафы</a></li></ul></div>
+      <div class="fcol"><h4>Компания</h4><ul><li><a href="#">О нас</a></li><li><a href="#">Доставка</a></li><li><a href="#">Контакты</a></li></ul></div>
+      <div class="fcol"><h4>Помощь</h4><ul><li><a href="#">Вопросы</a></li><li><a href="#">Гарантия</a></li><li><a href="#">Политика</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 Планета Мебели</span><span>Все права защищены</span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+
+<script>
+// ========== HELPER FUNCTIONS ==========
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toast');
+  const icon = toast.querySelector('.toast-icon');
+  icon.textContent = isError ? '✕' : '✓';
+  document.getElementById('toastMsg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._tm);
+  toast._tm = setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+// Работа с пользователями (localStorage)
+const USERS_KEY = 'pm_users';
+const getUsers = () => JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+const saveUsers = (users) => localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+// Найти пользователя по email
+function findUserByEmail(email) {
+  return getUsers().find(u => u.email.toLowerCase() === email.toLowerCase());
+}
+
+// Создать нового пользователя
+function createUser(name, surname, email, phone, password) {
+  const users = getUsers();
+  if (findUserByEmail(email)) return { success: false, error: 'Пользователь с таким email уже существует' };
+  const newUser = {
+    id: Date.now(),
+    name: name.trim(),
+    surname: surname.trim(),
+    fullName: (name.trim() + ' ' + surname.trim()).trim(),
+    email: email.toLowerCase().trim(),
+    phone: phone.trim(),
+    password: password, // в реальном проекте хэшировать, здесь для демо
+    role: 'user',
+    createdAt: new Date().toISOString()
+  };
+  users.push(newUser);
+  saveUsers(users);
+  return { success: true, user: newUser };
+}
+
+// Вход пользователя
+function loginUser(email, password) {
+  const user = findUserByEmail(email);
+  if (!user) return { success: false, error: 'Пользователь не найден' };
+  if (user.password !== password) return { success: false, error: 'Неверный пароль' };
+  return { success: true, user };
+}
+
+// Сохранить сессию
+function setCurrentUser(user) {
+  const session = {
+    id: user.id,
+    name: user.fullName || (user.name + ' ' + (user.surname || '')),
+    email: user.email,
+    role: user.role
+  };
+  localStorage.setItem('pm_user', JSON.stringify(session));
+}
+
+// Переключение табов
+function switchTab(tab) {
+  const btns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  btns.forEach(btn => btn.classList.remove('active'));
+  panels.forEach(panel => panel.classList.remove('active'));
+  if (tab === 'login') {
+    btns[0].classList.add('active');
+    document.getElementById('loginPanel').classList.add('active');
+  } else {
+    btns[1].classList.add('active');
+    document.getElementById('registerPanel').classList.add('active');
+  }
+}
+
+// Обновить счётчик корзины (для единообразия)
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('pm_cart') || '[]');
+  const count = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+  const cntSpan = document.getElementById('cartCount');
+  if (cntSpan) cntSpan.textContent = count;
+}
+
+// Валидация форм
+function validateLogin() {
+  let ok = true;
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  const emailErr = document.getElementById('loginEmailErr');
+  const passErr = document.getElementById('loginPassErr');
+  if (!email) { emailErr.classList.add('show'); ok = false; } else { emailErr.classList.remove('show'); }
+  if (!pass) { passErr.classList.add('show'); ok = false; } else { passErr.classList.remove('show'); }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailErr.textContent = 'Некорректный email'; emailErr.classList.add('show'); ok = false; }
+  else if (email) { emailErr.classList.remove('show'); }
+  return ok;
+}
+
+function validateRegister() {
+  let ok = true;
+  const name = document.getElementById('regName').value.trim();
+  const surname = document.getElementById('regSurname').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const pass = document.getElementById('regPassword').value;
+  const pass2 = document.getElementById('regPassword2').value;
+
+  const nameErr = document.getElementById('regNameErr');
+  const surnameErr = document.getElementById('regSurnameErr');
+  const emailErr = document.getElementById('regEmailErr');
+  const phoneErr = document.getElementById('regPhoneErr');
+  const passErr = document.getElementById('regPassErr');
+  const pass2Err = document.getElementById('regPass2Err');
+
+  if (!name) { nameErr.classList.add('show'); ok = false; } else { nameErr.classList.remove('show'); }
+  if (!surname) { surnameErr.classList.add('show'); ok = false; } else { surnameErr.classList.remove('show'); }
+  if (!email) { emailErr.classList.add('show'); emailErr.textContent = 'Введите email'; ok = false; }
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailErr.classList.add('show'); emailErr.textContent = 'Некорректный email'; ok = false; }
+  else { emailErr.classList.remove('show'); }
+  if (!phone) { phoneErr.classList.add('show'); ok = false; } else { phoneErr.classList.remove('show'); }
+  if (!pass) { passErr.classList.add('show'); passErr.textContent = 'Введите пароль'; ok = false; }
+  else if (pass.length < 6) { passErr.classList.add('show'); passErr.textContent = 'Пароль не менее 6 символов'; ok = false; }
+  else { passErr.classList.remove('show'); }
+  if (pass !== pass2) { pass2Err.classList.add('show'); ok = false; } else { pass2Err.classList.remove('show'); }
+  return ok;
+}
+
+// ========== ОБРАБОТЧИКИ ФОРМ ==========
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!validateLogin()) return;
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const result = loginUser(email, password);
+  if (result.success) {
+    setCurrentUser(result.user);
+    showToast(`Добро пожаловать, ${result.user.fullName || result.user.name}!`);
+    setTimeout(() => {
+      window.location.href = 'profile.html';
+    }, 1000);
+  } else {
+    showToast(result.error, true);
+  }
+});
+
+document.getElementById('registerForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!validateRegister()) return;
+  const name = document.getElementById('regName').value.trim();
+  const surname = document.getElementById('regSurname').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const result = createUser(name, surname, email, phone, password);
+  if (result.success) {
+    setCurrentUser(result.user);
+    showToast('Регистрация успешна! Вы вошли в аккаунт.');
+    setTimeout(() => {
+      window.location.href = 'profile.html';
+    }, 1200);
+  } else {
+    showToast(result.error, true);
+  }
+});
+
+// Инициализация: обновить корзину, проверить авторизацию
+(function init() {
+  updateCartCount();
+  const current = localStorage.getItem('pm_user');
+  if (current && window.location.pathname.includes('login.html')) {
+    // если уже залогинены и на странице входа — можно редиректнуть
+    setTimeout(() => { window.location.href = 'profile.html'; }, 500);
+  }
+})();
+</script>
+</body>
+</html>
